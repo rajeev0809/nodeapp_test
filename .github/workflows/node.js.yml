@@ -1,0 +1,19 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Run decryption script
+        run: |
+          /home/mnagaraju/actions-runner/Testproject-inno/decrypt.sh
+
+      - name: Deploy with Docker Compose
+        run: |
+          docker-compose -f /home/mnagaraju/actions-runner/Testproject-inno/docker-compose-test.yml build &&
+          docker-compose -f /home/mnagaraju/actions-runner/Testproject-inno/docker-compose-test.yml up -d
